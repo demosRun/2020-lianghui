@@ -306,12 +306,13 @@ padding:0 25px;}
 /*p14Con*/
 .p14Con{background:url(images/p14bg.jpg) repeat-x;height:347px;margin-top: 40px;}
 .p14Con .w1200{margin-top: 35px;}
-.p14Con .w1200 li{width:198px;float:left;margin:0 21px;text-align: center;}
+.p14Con .w1200 li{width:198px;float:left;margin:0 21px;text-align: center;cursor: pointer;}
 .p14Con .w1200 li span{height: 209px;display: block;}
-.p14Con .w1200 li p{width: 158px;margin:0 auto;height:58px;padding-top:12px;font-size: 18px;text-align: center;background:#cf3b3f;border-radius: 5px;}
+.p14Con .w1200 li p{width: 158px;margin:0 auto;height:58px;padding-top:12px;font-size: 18px;text-align: center;background:#cf3b3f;border-radius: 5px;line-height: 24px;}
 .p14Con .w1200 li.single p{line-height: 70px;height:70px;padding-top: 0}
 .p14Con .w1200 li.mt10 span img{margin-top:9px;}
 .p14Con .w1200 li.mt20 span img{margin-top:40px;}
+.p14Con .w1200 li:hover p {background-color: #c2996d;}
 /*p15Con*/
 .p15Con{margin-top: 40px;overflow: hidden;}
 .p15Con .left{width: 340px;height: 305px;background:#be2f21;}
@@ -1002,7 +1003,7 @@ padding:0 25px;}
 }
 
 /* 鼠标悬浮图片放大效果 */
-.hover-scale-box, .pic3 ul li img, .pic4 li img {
+.pic3 ul li img, .pic4 li img {
 	transition: transform 0.8s;
 	-moz-transition: transform 0.8s;	/* Firefox 4 */
 	-webkit-transition: transform 0.8s;	/* Safari 和 Chrome */
@@ -1010,6 +1011,10 @@ padding:0 25px;}
 }
 .hover-scale-box img {
 	transform: scale(1);
+	transition: transform 0.8s;
+	-moz-transition: transform 0.8s;	/* Firefox 4 */
+	-webkit-transition: transform 0.8s;	/* Safari 和 Chrome */
+	-o-transition: transform 0.8s;	/* Opera */
 }
 .hover-scale-box img:hover, .pic3 ul li img:hover, .pic4 li img:hover {
 	transform: scale(1.1);
