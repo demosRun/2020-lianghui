@@ -37,33 +37,33 @@ $(document).ready(function() {
     	paginationClickable: true
   	})
   	/*p2Con*/
-  	var swiperP2 = new Swiper('.swiper-container-p2', {
-	    mode: 'horizontal',
-	    autoplay: 5000,
-	    autoplayDisableOnInteraction: false,
-	    loop: true,
-	    slidesPerView: 1,
-	    pagination: '.swiper-pagination2',
-	    paginationClickable: true,
-	    mousewheelControl: false,
-	    onSlideChangeStart: function(swiper){
-	        $(".num1 .thisp").html(swiperP2.activeLoopIndex+1);
-	    }
-	});
-	var allNump1 = $(".swiper-pagination2").find(".swiper-pagination-switch").length;
-	$(".num1 .thisp").html(1);
-	$(".num1 .allp").html(allNump1);
-	$(".swiper-container-p2").mouseenter(function () {
-	    swiperP2.stopAutoplay();
-	}).mouseleave(function () {
-	    swiperP2.startAutoplay();
-	});
-	$(".prev1").click(function(){
-	    swiperP2.swipePrev();
-	});
-	$(".next1").click(function(){
-	    swiperP2.swipeNext();
-	});
+  // 	var swiperP2 = new Swiper('.swiper-container-p2', {
+	//     mode: 'horizontal',
+	//     autoplay: 5000,
+	//     autoplayDisableOnInteraction: false,
+	//     loop: true,
+	//     slidesPerView: 1,
+	//     pagination: '.swiper-pagination2',
+	//     paginationClickable: true,
+	//     mousewheelControl: false,
+	//     onSlideChangeStart: function(swiper){
+	//         $(".num1 .thisp").html(swiperP2.activeLoopIndex+1);
+	//     }
+	// });
+	// var allNump1 = $(".swiper-pagination2").find(".swiper-pagination-switch").length;
+	// $(".num1 .thisp").html(1);
+	// $(".num1 .allp").html(allNump1);
+	// $(".swiper-container-p2").mouseenter(function () {
+	//     swiperP2.stopAutoplay();
+	// }).mouseleave(function () {
+	//     swiperP2.startAutoplay();
+	// });
+	// $(".prev1").click(function(){
+	//     swiperP2.swipePrev();
+	// });
+	// $(".next1").click(function(){
+	//     swiperP2.swipeNext();
+	// });
 	/*p16Con*/
 	// var swiperP16 = new Swiper('.swiper-container-p16', {
 	//     mode: 'horizontal',
@@ -422,7 +422,7 @@ function changeText(dom, text, height) {
 }
 function nextCalendar () {
 	var newIndex = activeCalendarIndex + 1
-	if (newIndex < calendarEditList.length - 1) {
+	if (newIndex <= calendarEditList.length - 1) {
 		changeCalendar(newIndex, $('.date-item')[newIndex])
 	} else {
 		changeCalendar(0, $('.date-item')[0])
@@ -474,8 +474,14 @@ $(function () {
 	$('.calendar .date-list')[0].innerHTML = dateListHTML
 })
 var activeCalendarIndex = null
+var changeCalendarBusy = false
 // 日历切换方法
 function changeCalendar (index, activeEl) {
+	if (changeCalendarBusy) return
+	changeCalendarBusy = true
+	setTimeout(function () {
+		changeCalendarBusy = false
+	}, 1000);
 	activeCalendarIndex = index
 	// 更改计分板的日期
 	changeText(document.getElementsByClassName('scoreboard')[0], calendarEditList[index].getElementsByClassName('number')[0].innerHTML, 80)
@@ -567,8 +573,33 @@ function stopVideoPlay () {
 	if (p16Slide) p16Slide.startAutoPlay(3000)
 }
 
-var p16Slide = null
+function playVideo2 (id) {
+	var videoBox = document.querySelector('.tvplayshow2')
+	// 显示
+	videoBox.style.display = 'block'
+	// 停止自动轮播
+	if (p2Slide) p2Slide.stopAutoPlay()
+	p2Slide.isBusy = true
+	showPlayerBox({
+		id: id,
+		width: 580,
+		height: 388,
+		// 播放视频的盒子
+		box: videoBox.querySelector('.video-play')
+	});
+}
+function stopVideoPlay2 () {
+	var videoBox = document.querySelector('.tvplayshow2')
+	// 显示
+	videoBox.style.display = 'none'
+	videoBox.querySelector('.video-play').innerHTML = ''
+	p2Slide.isBusy = false
+	// 开启自动轮播
+	if (p2Slide) p2Slide.startAutoPlay(3000)
+}
 
+var p16Slide = null
+var p2Slide = null
 $(document).ready(function() {
 	// 加载轮播图
 	p16Slide = new Slide($(".swiper-container-p16")[0], '.swiper-wrapper', '.swiper-slide', {
@@ -581,7 +612,17 @@ $(document).ready(function() {
 		// 数字分页器
 		numberPaginationEL: ".num16",
 	})
-	
+	// 加载轮播图
+	p2Slide = new Slide($(".swiper-container-p2")[0], '.swiper-wrapper', '.swiper-slide', {
+		// 自动播放间隔
+		autoPlay: 4000,
+		// 切换下一个轮播图的class或ID
+		nextEl: ".next1",
+		// 切换上一个轮播图的class或ID
+		prevEl: ".prev1",
+		// 数字分页器
+		numberPaginationEL: ".num1",
+	})
 });
 
 function showMore (el) {
